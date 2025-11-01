@@ -1,9 +1,283 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.main {
-    width: 100%;
-    height: 100%;
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  overflow: hidden;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== INTRO ANIMATION ==================== */
+
+.intro-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  z-index: 100;
+  transition: opacity 0.6s ease-out;
+}
+
+.intro-container.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.handwriting-svg {
+  width: 600px;
+  height: 200px;
+  max-width: 90vw;
+  filter: drop-shadow(0 4px 15px rgba(44, 62, 80, 0.1));
+}
+
+/* SVG Stroke Animation - draws the text smoothly */
+.handwriting-animate {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  animation: drawStroke 4s ease-in-out forwards;
+}
+
+@keyframes drawStroke {
+  0% {
+    stroke-dashoffset: 1500;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.skip-text {
+  position: absolute;
+  bottom: 40px;
+  font-size: 12px;
+  color: #7f8c8d;
+  letter-spacing: 1px;
+  animation: fadeInSkip 2s ease-out 2s forwards;
+  opacity: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.skip-text:hover {
+  color: #2c3e50;
+}
+
+@keyframes fadeInSkip {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==================== SPLIT SCREEN LAYOUT ==================== */
+
+.split-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.split-container.fade-in-split {
+  animation: fadeInSplit 0.8s ease-out;
+}
+
+@keyframes fadeInSplit {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.split-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  background-size: 150% 150%;
+  background-position: 0% 0%;
+}
+
+/* Customer Section - Green */
+.customer-section {
+  background: linear-gradient(135deg, #f0f9f6 0%, #e0f5eb 100%);
+}
+
+.customer-section:hover {
+  background-position: 100% 100%;
+  transform: scale(1.02);
+}
+
+.customer-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0) 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.customer-section:hover::before {
+  opacity: 1;
+}
+
+/* Seller Section - Orange */
+.seller-section {
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+}
+
+.seller-section:hover {
+  background-position: 100% 100%;
+  transform: scale(1.02);
+}
+
+.seller-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.05) 0%, rgba(255, 152, 0, 0) 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.seller-section:hover::before {
+  opacity: 1;
+}
+
+/* Section Content */
+.section-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+  max-width: 320px;
+  transition: all 0.4s;
+}
+
+.split-section:hover .section-content {
+  transform: translateY(-8px);
+}
+
+.section-label {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  color: #2c3e50;
+}
+
+.customer-section .section-label {
+  color: #2e7d32;
+}
+
+.seller-section .section-label {
+  color: #e65100;
+}
+
+.section-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #5a6c7d;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.cta-arrow {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.customer-section .cta-arrow {
+  color: #4caf50;
+}
+
+.seller-section .cta-arrow {
+  color: #ff9800;
+}
+
+.split-section:hover .cta-arrow {
+  transform: translateX(6px);
+}
+
+/* Animated Border */
+.animated-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: 0;
+  background-clip: padding-box;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.customer-section:hover .animated-border {
+  opacity: 0.3;
+  border-color: #4caf50;
+  box-shadow: inset 0 0 20px rgba(76, 175, 80, 0.1);
+}
+
+.seller-section:hover .animated-border {
+  opacity: 0.3;
+  border-color: #ff9800;
+  box-shadow: inset 0 0 20px rgba(255, 152, 0, 0.1);
+}
+
+/* Fade out transition for page navigation */
+.container.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column;
+  }
+
+  .handwriting-svg {
+    width: 90vw;
+    height: 120px;
+  }
+
+  .handwriting-text {
+    font-size: 48px !important;
+  }
+
+  .section-label {
+    font-size: 32px;
+  }
+
+  .section-description {
+    font-size: 14px;
+  }
 }

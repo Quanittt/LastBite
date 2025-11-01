@@ -3,15 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css" type="style/css">
-    <title>LastBite | Save food | Save money</title>
+    <title>LastBite - Anti-Food Waste Service</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main">
+    <div class="container">
+        <!-- Intro Animation: "Who are you?" -->
+        <div class="intro-container" id="introContainer">
+            <svg viewBox="0 0 800 200" class="handwriting-svg">
+                <defs>
+                    <style>
+                        .handwriting-text {
+                            font-family: 'Dancing Script', cursive;
+                            font-size: 72px;
+                            font-weight: 700;
+                            fill: none;
+                            stroke: #2c3e50;
+                            stroke-width: 2;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                        }
+                    </style>
+                </defs>
+                <text
+                    x="50%"
+                    y="50%"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    class="handwriting-text handwriting-animate"
+                    id="handwritingText"
+                >
+                    Who are you?
+                </text>
+            </svg>
+            <p class="skip-text">Press ESC to skip</p>
+        </div>
 
+        <!-- Split Screen Layout -->
+        <div class="split-container fade-in-split" id="splitContainer" style="display: none;">
+            <!-- Customer Side (Green) -->
+            <div class="split-section customer-section" onclick="navigateTo('customer.html')">
+                <div class="section-content">
+                    <div class="section-label">Customer</div>
+                    <div class="section-description">Save money. Reduce waste. Enjoy quality food at special prices.</div>
+                    <div class="cta-arrow">←</div>
+                </div>
+                <div class="animated-border"></div>
+            </div>
+
+            <!-- Seller Side (Orange) -->
+            <div class="split-section seller-section" onclick="navigateTo('seller.html')">
+                <div class="section-content">
+                    <div class="section-label">Seller</div>
+                    <div class="section-description">Reduce surplus. Grow revenue. Join the sustainable revolution.</div>
+                    <div class="cta-arrow">→</div>
+                </div>
+                <div class="animated-border"></div>
+            </div>
+        </div>
     </div>
+
+    <script src="scripts/index.js"></script>
 </body>
 </html>
