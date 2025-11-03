@@ -9,35 +9,37 @@
 </head>
 <body>
     <div class="container">
-        <!-- Intro Animation: "Who are you?" -->
-        <div class="intro-container" id="introContainer">
+        <!-- First Intro Animation: "Who are you?" -->
+        <div class="intro-container" id="introContainer1">
             <svg viewBox="0 0 800 200" class="handwriting-svg">
-                <defs>
-                    <style>
-                        .handwriting-text {
-                            font-family: 'Dancing Script', cursive;
-                            font-size: 72px;
-                            font-weight: 700;
-                            fill: none;
-                            stroke: #2c3e50;
-                            stroke-width: 2;
-                            stroke-linecap: round;
-                            stroke-linejoin: round;
-                        }
-                    </style>
-                </defs>
                 <text
                     x="50%"
                     y="50%"
                     text-anchor="middle"
                     dominant-baseline="middle"
                     class="handwriting-text handwriting-animate"
-                    id="handwritingText"
+                    id="handwritingText1"
+                >
+                    Welcome!
+                </text>
+            </svg>
+        </div>
+
+        <!-- Second Intro Animation: "Choose your path" -->
+        <div class="intro-container" id="introContainer2" style="display: none;">
+            <svg viewBox="0 0 800 200" class="handwriting-svg">
+                <text
+                    x="50%"
+                    y="50%"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    class="handwriting-text handwriting-animate"
+                    id="handwritingText2"
                 >
                     Who are you?
                 </text>
             </svg>
-            <p class="skip-text">Press ESC to skip</p>
+            <p class="skip-text" id="skipText">Press ESC to skip</p>
         </div>
 
         <!-- Split Screen Layout -->
@@ -47,7 +49,7 @@
                 <div class="section-content">
                     <div class="section-label">Customer</div>
                     <div class="section-description">Save money. Reduce waste. Enjoy quality food at special prices.</div>
-                    <div class="cta-arrow">←</div>
+                    <div class="cta-arrow">→</div>
                 </div>
                 <div class="animated-border"></div>
             </div>

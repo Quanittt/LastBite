@@ -1,28 +1,52 @@
 // ========== ANIMATION TIMING & STATE MANAGEMENT ==========
 
 // Get HTML elements we need to control
-const introContainer = document.getElementById("introContainer")
+const introContainer1 = document.getElementById("introContainer1")
+const introContainer2 = document.getElementById("introContainer2")
 const splitContainer = document.getElementById("splitContainer")
 const container = document.querySelector(".container")
-const handwritingText = document.getElementById("handwritingText")
+const handwritingText1 = document.getElementById("handwritingText1")
+const handwritingText2 = document.getElementById("handwritingText2")
+const skipText = document.getElementById("skipText")
 
 // Variables to track state
-let animationComplete = false
+let firstAnimationComplete = false
+let secondAnimationComplete = false
 let isTransitioning = false
 
+// ========== SHOW SECOND INTRO FUNCTION ==========
+// After first animation ends (4 seconds), fade out first intro and show second intro
+function showSecondIntro() {
+  if (firstAnimationComplete) return
+
+  firstAnimationComplete = true
+
+  // Fade out first intro
+  introContainer1.classList.add("fade-out")
+
+  // After fade animation, show second intro
+  setTimeout(() => {
+    introContainer1.style.display = "none"
+    introContainer2.style.display = "flex"
+  }, 300)
+}
+
 // ========== SHOW SPLIT SCREEN FUNCTION ==========
-// This function reveals the split screen after the intro animation ends
+// After second animation ends (4 seconds), fade out second intro and show split screen
 function showSplitScreen() {
-  if (animationComplete) return // Don't run twice
+  if (secondAnimationComplete) return
 
-  animationComplete = true
+  secondAnimationComplete = true
 
-  // Add fade-out class to intro (makes it disappear)
-  introContainer.classList.add("fade-out")
+  // Add fade-out class to second intro (makes it disappear)
+  introContainer2.classList.add("fade-out")
 
   // Show the split screen with fade-in
-  splitContainer.style.display = "flex"
-  splitContainer.classList.add("fade-in-split")
+  setTimeout(() => {
+    introContainer2.style.display = "none"
+    splitContainer.style.display = "flex"
+    splitContainer.classList.add("fade-in-split")
+  }, 300)
 }
 
 // ========== NAVIGATION FUNCTION ==========
@@ -42,26 +66,22 @@ function navigateTo(page) {
 }
 
 // ========== KEYBOARD EVENT: ESC TO SKIP ==========
-// This allows user to press ESC to skip the intro animation
+// Can only skip after second intro is shown
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !animationComplete) {
+  if (event.key === "Escape" && secondAnimationComplete === false && firstAnimationComplete === true) {
     showSplitScreen()
   }
 })
 
-// ========== AUTO-SHOW SPLIT SCREEN AFTER 4.5 SECONDS ==========
-// The SVG animation takes 4 seconds, so we show the split screen after that
+// ========== AUTO TIMING FOR BOTH ANIMATIONS ==========
+// First animation: 4 seconds, then show second intro
+setTimeout(() => {
+  showSecondIntro()
+}, 2500)
+
+// Second animation: 4 seconds after first ends (total 8.5 seconds), then show split screen
 setTimeout(() => {
   showSplitScreen()
-}, 4500)
+}, 9000)
 
-// ========== CLICK ON INTRO TO SKIP ==========
-// Allow clicking the intro to skip it
-introContainer.addEventListener("click", (event) => {
-  // Only skip if clicking on the intro area, not the split screen
-  if (!animationComplete && event.target === introContainer) {
-    showSplitScreen()
-  }
-})
-
-console.log("[v0] LastBite landing page loaded successfully")
+console.log("[v0] LastBite landing page with dual intro animations loaded successfully")

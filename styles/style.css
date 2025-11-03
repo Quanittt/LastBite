@@ -34,9 +34,22 @@ body {
   transition: opacity 0.6s ease-out;
 }
 
+.handwriting-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 72px;
+    font-weight: 700;
+    fill: none;
+    stroke: #2c3e50;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 .intro-container.fade-out {
   opacity: 0;
   pointer-events: none;
+}
+.fade-in {
+  opacity: 1;
 }
 
 .handwriting-svg {
@@ -50,7 +63,7 @@ body {
 .handwriting-animate {
   stroke-dasharray: 1500;
   stroke-dashoffset: 1500;
-  animation: drawStroke 4s ease-in-out forwards;
+  animation: drawStroke 5s ease-in-out forwards;
 }
 
 @keyframes drawStroke {
