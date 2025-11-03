@@ -1,5 +1,8 @@
 // Simple page script for customer and seller pages
 // This handles basic interactivity
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
 
 // Log when page loads
 console.log("[v0] Page loaded successfully")
@@ -20,3 +23,13 @@ document.querySelectorAll(".cta-button").forEach((button) => {
     }, 500)
   })
 })
+
+//Registration form
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
