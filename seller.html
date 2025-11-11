@@ -17,19 +17,19 @@
         <main class="page-content">
         <div class="container" id="container">
         	<div class="form-container sign-up-container">
-        		<form action="#">
+        		<form action="#" id="sellerRegisterForm">
         			<h1>Create Account</h1>
-        			<input type="text" placeholder="Name" />
-        			<input type="email" placeholder="Email" />
-        			<input type="password" placeholder="Password" />
+        			<input type="text" placeholder="Назва Магазину" id="sellerStoreName" />
+        			<input type="email" placeholder="Email" id="sellerRegisterEmail" />
+        			<input type="password" placeholder="Password" id="sellerRegisterPassword" />
         			<button>Sign Up</button>
         		</form>
         	</div>
         	<div class="form-container sign-in-container">
-        		<form action="#">
+        		<form action="#" id="sellerLoginForm">
         			<h1>Sign in</h1>
-        			<input type="email" placeholder="Email" />
-        			<input type="password" placeholder="Password" />
+        			<input type="email" placeholder="Email" id="sellerLoginEmail" />
+        			<input type="password" placeholder="Password" id="sellerLoginPassword"/>
         			<button>Sign In</button>
         		</form>
         	</div>
@@ -54,7 +54,8 @@
             <p>&copy; 2025 LastBite. Fighting food waste, one meal at a time.</p>
         </footer>
     </div>
-
-    <script src="scripts/page-scripts.js"></script>
+	<script src="scripts/database.js" type="module"></script>
+    <script src="scripts/auth.js" type="module"></script>
+    <script src="scripts/page-scripts.js" type="module"></script>	
 </body>
 </html>
