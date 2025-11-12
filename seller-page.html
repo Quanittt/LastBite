@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>LastBite - Seller</title>
+    <link rel="stylesheet" href="styles/page-style-css.css">
+    <link rel="stylesheet" href="styles/seller-page.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    
+<body class="seller-page">
+    <div class="page-container">
+        <header class="page-header">
+            <button class="back-button red" id="logoutButton">← Log Out</button>
+            <h1 class="page-title" id="user-name"></h1>
+        </header>
+
+        <main class="page-content">
+            <div class="add-product-button">
+                <span>+</span>
+                <p>add a product</p>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p>&copy; 2025 LastBite. Fighting food waste, one meal at a time.</p>
+        </footer>
+    </div>
+    <script src="scripts/database.js" type="module"></script>
+    <script src="scripts/auth.js" type="module"></script>
+    <script src="scripts/page-scripts.js" type="module"></script>	
+    <script src="scripts/seller-page.js" type="module"></script>	
 </body>
 </html>

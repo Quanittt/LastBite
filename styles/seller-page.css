@@ -1,0 +1,45 @@
+.add-product-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 270px;
+    height: 370px;
+    border: 2px solid rgb(188, 188, 188);
+    color: rgb(188, 188, 188);
+    border-radius: 20px;
+    font-size: 180px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.add-product-button > * {
+    user-select: none;
+    transition: 0.2s;
+    padding-bottom: 120px;
+}
+.add-product-button:hover {
+    background-color: rgb(231, 231, 231);
+    transition: 0.2s;
+    width: 280px;
+    height: 380px;
+}
+.add-product-button > span {
+    height: 180px;
+    margin: 0;
+    padding: 0;
+    font-size: 180px;
+}
+.add-product-button > p {
+    font-size: 20px;
+    height: 20px;
+}
+.add-product-button:hover > p {
+    transition: 0.2s;
+    font-size: 23px;
+    height: 23px;
+}
+.add-product-button:hover > span  {
+    transition: 0.2s;
+    font-size: 200px;
+    height: 200px;
+}

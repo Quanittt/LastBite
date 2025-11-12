@@ -349,3 +349,6 @@ input {
     font-size: 14px;
   }
 }
+.red:hover {
+	color: red;
+}
