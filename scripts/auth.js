@@ -1,3 +1,6 @@
+// scripts/auth.js
+
+// 1. ЄДИНИЙ ІМПОРТ (Все беремо з database.js)
 import { 
     auth, 
     db, 
@@ -6,75 +9,31 @@ import {
     doc, 
     setDoc, 
     getDoc 
-} from './database.js';
-/**
-   @param {string} email - Електронна пошта користувача.
-   @param {string} password - Пароль.
- * @param {string} role - Роль ('customer' або 'seller').
- * @param {string} displayName - Ім'я клієнта або назва магазину.
- */
-async function loginUser(email, password, expectedRole) { // <<< ДОДАНО expectedRole
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+} from './database.js'; 
 
-        const docSnap = await getDoc(doc(db, "users", user.uid));
-        
-        if (docSnap.exists()) {
-            const actualRole = docSnap.data().role; // Актуальна роль у базі
-            console.log(`Користувач ${user.email} успішно увійшов з роллю: ${actualRole}`);
+console.log("Auth.js завантажено успішно!"); // <--- ЦЕ ПЕРЕВІРКА, ЧИ ФАЙЛ ЖИВИЙ
 
-            // === ПЕРЕВІРКА АВТОРИЗАЦІЇ ===
-            if (actualRole !== expectedRole) { // Порівнюємо актуальну роль з очікуваною
-                 alert(`Ви увійшли як ${actualRole}. Перейдіть на сторінку ${actualRole} для входу.`);
-                 await auth.signOut(); 
-                 return; 
-            }
-
-            // ПЕРЕНАПРАВЛЕННЯ
-            if (expectedRole === 'customer') {
-                 window.location.href = 'customer-page.html'; // <<< ПЕРЕВІРТЕ НАЗВУ ФАЙЛУ!
-            } else if (expectedRole === 'seller') {
-                 window.location.href = 'seller-page.html'; // <<< ПЕРЕВІРТЕ НАЗВУ ФАЙЛУ!
-            }
-
-        } else {
-            console.error("Не знайдено ролі користувача у базі даних.");
-            await auth.signOut();
-        }
-
-    } catch (error) {
-        console.error("Помилка входу:", error.message);
-        alert("Помилка входу: Невірний email або пароль.");
-    }
-}
-
+// 2. ФУНКЦІЯ РЕЄСТРАЦІЇ
 async function registerUser(email, password, role, displayName) {
     try {
-        // 1. Створення акаунту через Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // 2. Створення об'єкта даних для Firestore
         const userData = {
             email: user.email,
             role: role,
             createdAt: new Date().toISOString()
         };
 
-        // Додаємо відповідне поле відповідно до ролі
         if (role === 'seller') {
             userData.storeName = displayName;
-        } else { // 'customer'
+        } else { 
             userData.name = displayName; 
         }
 
-        // 3. Зберігання інформації (ролі та ім'я/назви) у Cloud Firestore
         await setDoc(doc(db, "users", user.uid), userData);
-
-        console.log(`Користувача ${user.email} успішно зареєстровано як ${role}`);
+        console.log(`Успішна реєстрація: ${role}`);
         
-        // 4. Перенаправлення
         if (role === 'customer') {
             window.location.href = 'customer-page.html';
         } else if (role === 'seller') {
@@ -82,78 +41,94 @@ async function registerUser(email, password, role, displayName) {
         }
 
     } catch (error) {
-        console.error("Помилка реєстрації:", error.message);
-        let errorMessage = "Невідома помилка реєстрації.";
-        if (error.code === 'auth/email-already-in-use') {
-            errorMessage = "Ця електронна пошта вже використовується.";
-        } else if (error.code === 'auth/weak-password') {
-             errorMessage = "Пароль має бути не менше 6 символів.";
-        }
-        alert(`Помилка реєстрації: ${errorMessage}`);
+        console.error("Помилка реєстрації:", error);
+        alert("Помилка реєстрації: " + error.message);
     }
 }
 
-// Експортуємо функцію під назвою, яку викликаємо у HTML
+// 3. ФУНКЦІЯ ВХОДУ
+async function loginUser(email, password, expectedRole) {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const docSnap = await getDoc(doc(db, "users", user.uid));
+        
+        if (docSnap.exists()) {
+            const actualRole = docSnap.data().role;
+            console.log(`Вхід успішний. Роль: ${actualRole}`);
+
+            if (actualRole !== expectedRole) {
+                 alert(`Помилка доступу. Ви ${actualRole}, а намагаєтесь увійти як ${expectedRole}.`);
+                 await auth.signOut(); 
+                 return; 
+            }
+
+            if (expectedRole === 'customer') {
+                 window.location.href = 'customer-page.html';
+            } else if (expectedRole === 'seller') {
+                 window.location.href = 'seller-page.html';
+            }
+        } else {
+            console.error("Користувача немає в базі даних");
+            alert("Помилка акаунту.");
+        }
+
+    } catch (error) {
+        console.error("Помилка входу:", error);
+        alert("Невірний email або пароль.");
+    }
+}
+
+// 4. ЕКСПОРТ (Для інших файлів, якщо треба)
 export function handleRegistration(email, password, role, displayName) {
     registerUser(email, password, role, displayName);
 }
 
-// Експортуємо функцію входу під назвою, яку ми викликаємо в HTML
-export function handleLogin(email, password, expectedRole) { // <<< ДОДАНО expectedRole
+export function handleLogin(email, password, expectedRole) {
     loginUser(email, password, expectedRole);
 }
 
-// Оновлення експорту:
-// export { handleRegistration, handleLogin };
-
-// scripts/auth.js (ДОДАЄМО ОБРОБНИКИ ПОДІЙ)
-
-// ІМПОРТОВАНІ ФУНКЦІЇ:
-// handleRegistration та handleLogin (вони вже оголошені та експортовані у цьому файлі)
-
+// 5. ОБРОБНИКИ ПОДІЙ (Щоб кнопки працювали)
 document.addEventListener('DOMContentLoaded', () => {
-    // =======================================================
-    // 1. ОБРОБНИК РЕЄСТРАЦІЇ (Sign Up)
-    // =======================================================
-    const customerRegisterForm = document.getElementById('registerForm'); // ID з customer.html
-
-    if (customerRegisterForm) { 
+    // --- КЛІЄНТ ---
+    const customerRegisterForm = document.getElementById('registerForm');
+    if (customerRegisterForm) {
+        console.log("Знайдено форму реєстрації клієнта");
         customerRegisterForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault(); // <--- ОСЬ ЩО ЗУПИНЯЄ ПЕРЕЗАВАНТАЖЕННЯ
+            console.log("Натиснуто Sign Up (Customer)");
             
-            // Збираємо дані з унікальних ID покупця
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
-            const name = document.getElementById('registerName').value; // Ім'я клієнта
+            const name = document.getElementById('registerName').value;
             
-            // Роль: 'customer'
             handleRegistration(email, password, 'customer', name); 
         });
     }
 
-
-    // =======================================================
-    // 2. ОБРОБНИК ВХОДУ (Sign In)
-    // =======================================================
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
+        console.log("Знайдено форму входу клієнта");
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault(); // <--- ОСЬ ЩО ЗУПИНЯЄ ПЕРЕЗАВАНТАЖЕННЯ
+            console.log("Натиснуто Sign In (Customer)");
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            // Передаємо очікувану роль 'customer'
+            
             handleLogin(email, password, 'customer'); 
         });
     }
 
+    // --- ПРОДАВЕЦЬ ---
+    const sellerRegisterForm = document.getElementById('sellerRegisterForm');
     if (sellerRegisterForm) {
         sellerRegisterForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
+            e.preventDefault();
             const email = document.getElementById('sellerRegisterEmail').value;
             const password = document.getElementById('sellerRegisterPassword').value;
-            const storeName = document.getElementById('sellerStoreName').value; 
-            
+            const storeName = document.getElementById('sellerStoreName').value;
             handleRegistration(email, password, 'seller', storeName);
         });
     }
@@ -161,24 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sellerLoginForm = document.getElementById('sellerLoginForm');
     if (sellerLoginForm) {
         sellerLoginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             const email = document.getElementById('sellerLoginEmail').value;
             const password = document.getElementById('sellerLoginPassword').value;
-            // Передаємо очікувану роль 'seller'
             handleLogin(email, password, 'seller'); 
-        });
-    }
-    
-    // =======================================================
-    // 5. Оновлення існуючих обробників КЛІЄНТА, щоб передати роль
-    // =======================================================
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            // Передаємо очікувану роль 'customer'
-            handleLogin(email, password, 'customer'); 
         });
     }
 });

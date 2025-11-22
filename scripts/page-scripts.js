@@ -4,9 +4,6 @@ const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
 
-// Log when page loads
-console.log("[v0] Page loaded successfully")
-
 // Optional: Add smooth scroll behavior
 document.documentElement.style.scrollBehavior = "smooth"
 
@@ -14,22 +11,32 @@ document.documentElement.style.scrollBehavior = "smooth"
 let isClicking = false
 
 document.querySelectorAll(".cta-button").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    if (isClicking) return
-    isClicking = true
+  button.addEventListener("click", (e) => {
+    if (isClicking) return
+    isClicking = true
 
-    setTimeout(() => {
-      isClicking = false
-    }, 500)
-  })
+    setTimeout(() => {
+      isClicking = false
+    }, 500)
+  })
 })
 
-//Registration form
+// =========================================================
+// ЛОГІКА АНІМАЦІЇ: ЗАХИЩЕНА ПЕРЕВІРКОЮ
+// Код виконується лише, якщо елементи існують (тобто, ми на сторінці реєстрації)
+// =========================================================
 
-signUpButton.addEventListener('click', () => {
-	container.classList.add("right-panel-active");
-});
+// Перевіряємо, чи існує контейнер (або будь-який інший критичний елемент)
+if (container && signUpButton && signInButton) { 
 
-signInButton.addEventListener('click', () => {
-	container.classList.remove("right-panel-active");
-});
+    // Registration form
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+
+}
+// =========================================================

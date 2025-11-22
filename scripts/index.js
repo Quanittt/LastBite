@@ -84,4 +84,3 @@ setTimeout(() => {
   showSplitScreen()
 }, 9000)
 
-console.log("[v0] LastBite landing page with dual intro animations loaded successfully")

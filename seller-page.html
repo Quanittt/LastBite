@@ -17,9 +17,18 @@
         </header>
 
         <main class="page-content">
-            <div class="add-product-button">
+            <div class="add-product-button" id="add-product-button">
                 <span>+</span>
                 <p>add a product</p>
+            </div>
+
+            <div id="addProductContainer" class="addProductContainer">
+                <h3>Додати нову позицію</h3>
+                <input type="text" id="foodName" placeholder="Назва їжі (напр. Борщ)">
+                <input type="number" id="foodPrice" placeholder="Ціна (грн)">
+                <input type="text" id="foodDescription" placeholder="Опис (склад, вага)">
+    
+                <button id="btnAddProduct">Опублікувати товар</button>
             </div>
         </main>
 
@@ -27,6 +36,7 @@
             <p>&copy; 2025 LastBite. Fighting food waste, one meal at a time.</p>
         </footer>
     </div>
+    <script src="scripts/seller-logic.js" type="module"></script>
     <script src="scripts/database.js" type="module"></script>
     <script src="scripts/auth.js" type="module"></script>
     <script src="scripts/page-scripts.js" type="module"></script>	

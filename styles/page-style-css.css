@@ -67,6 +67,8 @@ body {
 /* ==================== PAGE CONTENT ==================== */
 
 .page-content {
+  flex-direction: column;
+  gap: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
