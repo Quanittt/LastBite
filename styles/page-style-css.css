@@ -304,7 +304,76 @@ input {
 	width: 40px;
 }
 
+.page-cart {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+}
 
+/* Базовий стиль для іконки кошика */
+.page-cart {
+    cursor: pointer;
+    top: 20px;
+    right: 20px; /* Або змініть на left, якщо хочете справа */
+    width: 30px;
+    height: 30px;
+    z-index: 1000; /* Переконатися, що іконка поверх усього */
+}
+
+/* Стилі для сайдбару кошика */
+.cart-sidebar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+    position: fixed;
+    top: 0;
+    /* Починаємо за межами екрана (ЗЛІВА: використовуйте 'left', якщо у вас кошик справа) */
+    right: 0; 
+    height: 100%;
+    width: 350px; /* Ширина кошика */
+    background-color: #f8f8f8;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1010;
+    padding: 20px;
+    
+    /* Керування появою/зникненням */
+    transform: translateX(100%); /* ПРИХОВАНО: змістіть на всю ширину вправо */
+    transition: transform 0.3s ease-out; /* Плавна анімація */
+    overflow-y: auto; /* Дозволити прокрутку вмісту */
+}
+
+/* Клас, який робить сайдбар видимим */
+.cart-sidebar.open {
+    transform: translateX(0); /* ВИДИМО: зміщення немає */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+}
+
+.cart-footer {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    position: sticky;
+    bottom: 0;
+    background: #f8f8f8;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
 /* ==================== FOOTER ==================== */
 
 .page-footer {

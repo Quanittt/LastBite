@@ -21,7 +21,9 @@ import {
     getDoc, 
     collection, 
     addDoc, 
-    getDocs 
+    getDocs,
+    arrayUnion,
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // =======================================================
@@ -63,5 +65,7 @@ export {
     getDoc, 
     collection, 
     addDoc, 
-    getDocs
+    getDocs,
+    arrayUnion,
+    deleteDoc
 };

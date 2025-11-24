@@ -13,6 +13,21 @@
         <header class="page-header">
             <button class="back-button" id="logoutButton" onclick="window.history.back()">← Back</button>
             <h1 class="page-title" id="user-name"></h1>
+            <img class="page-cart" src="https://www.svgrepo.com/show/80543/shopping-cart-outline.svg" id="openCartBtn">
+            <div class="cart-sidebar" id="cartSidebar">
+                <button class="close-btn" id="closeCartBtn">×</button>
+
+                <h2>🛒 Ваш Кошик</h2>
+
+                <div class="cart-items-list" id="cartItemsList">
+                    <p>Кошик пустий.</p>
+                </div>
+
+                <div class="cart-footer">
+                    <p>Загальна сума: <span id="cartTotal">0.00 грн</span></p>
+                    <button class="checkout-btn" id="confirmOrderBtn">Підтвердити Замовлення</button>
+                </div>
+            </div>
         </header>
 
         <main class="page-content">
